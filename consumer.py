@@ -79,7 +79,7 @@ class Consumer(threading.Thread):	# threading.Thread is super class
                                 
             result_json_object = {
                 "type": "INFERENCE",
-                "key": "admin@vazilcompany.com/바질컴퍼니/CAP-0001/5d529bbcf8fe714code1c402a.png",
+                "key": "xxxxxxx",
                 "content": {
                     "ymin": 0,
                     "xmin": 0,

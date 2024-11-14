@@ -7,13 +7,11 @@ import socket
 import websockets
 	
 class WSClient:
-    #uri = "ws://localhost:8765"
-    connection_uri = "ws://133.186.162.169:5000/ws"
+    connection_uri = "ws://x.x.x.x:5000/ws"
     subscribe_uri = '/topic/ai.inference.result'
     ping_timeout = 5
     connection_failure_retry_sleep_time = 5
-    #g_websocket = 0
-    
+
     def __init__(self):
         self.retry_connection_counts = 0
         
@@ -80,7 +78,6 @@ class WSClient:
                     #print('Result: {}'.format(reply_connected))
                     print(reply_connected)
                     return reply_connected
-                 (asyncio.TimeoutError, websockets.exception.ConnectionClosed):
                     try:
                         pong = self.websocket.ping()
                         asyncio.wait_for(pong, WSClient.ping_timeout)
@@ -88,7 +85,7 @@ class WSClient:
                         
                     except:
                         print('why???...')
-                        #break
+                        break
                             
             except socket.gaierror:
                 print("socket.gaierror")
@@ -111,8 +108,7 @@ class WSClient:
             try:
                 
                 print("set data")
-                #senddata = json.load('{"type":"INTERFACE", "key":"testfile.txt", "content":"ok", "sender":"API Server"}')#json.dumps({"hello world"})
-                #name = "swseo"
+
                 send_message = stomper.send("/app/ai.inference.result", json.dumps([json.dumps({"type":"INTERFACE", "key":"testfile.txt", "content":"ok", "sender":"API Server"})]))
 
                 #await self.websocket.send(send_message)
@@ -161,24 +157,19 @@ class WSClient:
                     sub = stomper.subscribe("/topic/ai.inference.result", client_id, ack='auto')
                     await ws.send(sub)
                     reply = await asyncio.wait_for(ws.recv(), timeout=5)
-                    #print(f"< {reply}")
-                    print('Result: {}'.format(reply))                   
-                    
+                    print('Result: {}'.format(reply))
                     
                     while True:
                     # listener loop
                         try:
                             await asyncio.sleep(5)
                             print("set data")
-                            #senddata = json.load('{"type":"INTERFACE", "key":"testfile.txt", "content":"ok", "sender":"API Server"}')#json.dumps({"hello world"})
-                            #name = "swseo"
 
                             send_message = stomper.send("/app/ai.inference.result", json.dumps([json.dumps({"type":"INTERFACE", "key":"testfile.txt", "content":"ok", "sender":"API Server"})]))
         
                             await ws.send(send_message)                            
                             
                             reply = await asyncio.wait_for(ws.recv(), timeout=5)
-                            #print(f"< {reply}")
                             print('Result: {}'.format(reply))
                             
                         except (asyncio.TimeoutError, websockets.exceptions.ConnectionClosed):
@@ -186,7 +177,6 @@ class WSClient:
                                 pong = await ws.ping()
                                 await asyncio.wait_for(pong, timeout=5)
                                 print("Ping OK, keeping connection alive...")
-                                #logger.debug('Ping OK, keeping connection alive...')
                                 continue
                             except:
                                 await asyncio.sleep(5)
@@ -214,7 +204,4 @@ if __name__ == '__main__':
     print(res)
     
     res = wcs.start_com_server()
-	#asyncio.get_event_loop().run_forever()
-	#print("*******************************************")
-	#print("return run_forever")
-	#print("*********************************************")
+

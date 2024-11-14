@@ -8,7 +8,7 @@ import os
 class DefectInspection:
     def __init__(self):
         
-        self.label_map = {0: "NG", 1: "OK"}
+        self.label_map = {0: "Failure", 1: "Success"}
 
 
     def start_processing1(self):   

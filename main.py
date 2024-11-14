@@ -10,15 +10,12 @@ import asyncio
 
 asyncio.apply() #for anaconda env...remove under linux!!!
 
-login_url = 'http://133.186.162.169:8080/api/auth/login'
-websocket_connection_uri = 'ws://133.186.162.169:5000/ws'
-inspection_result_url = 'http://133.186.162.169:8080/api/inference/result'
+login_url = 'http://x.x.x.x:8080/api/auth/login'
+websocket_connection_uri = 'ws://x.x.x.x:5000/ws'
+inspection_result_url = 'http://x.x.x.x:x/api/inference/result'
 
-#login_url = 'http://192.168.1.49:8080/api/auth/login'
-#websocket_connection_uri = 'ws://192.168.1.49:5000/ws'
-#inspection_result_url = 'http://192.168.1.49:8080/api/inference/result'
 
-username = 'admin@vazilcompany.com'
+username = 'admin@example.com'
 password = '1234'
 
 stomp_subscribe_uri = '/topic/ai.inference.result'
@@ -28,9 +25,8 @@ cvi = threading.Condition()
 
 if __name__ == '__main__':
     print('name=', __name__)
-    #inspection = inference.DefectInspection()#ic.DefectInspection()
-    
-    inspection = ic.DefectInspection("D:/development/vazilproject/o-ring_inspection_using_tensorflow/o-ring_defect_inspection/models")
+
+    inspection = ic.DefectInspection("./project_dir/models")
     inspection.load_models()
     
     jwtoken = irreq.loginWebserver(login_url, username, password)

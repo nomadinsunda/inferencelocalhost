@@ -104,29 +104,4 @@ if __name__ == '__main__':
 	c.join()
 	p.join()
 	
-			
-	#con = []
-	#pro = []
-
-	#for i in range(NR_CONSUMER):
-		#c = Consumer(i)
-		#c.setDaemon(True)
-		#con.append(c)
-	
-	#for i in range(NR_PRODUCER):
-		#p = Producer(i)
-		#pro.append(p)
-		
-	#for th in con:
-		#th.start()
-		
-	#for th in pro:
-		#th.start()
-		
-	#for th in con:
-		#th.join()
-		
-	#for th in pro:
-		#th.join()
-	
 print('Exiting')

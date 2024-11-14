@@ -10,8 +10,6 @@ import time
 import os
 import cv2
 
-#matplotlib inline
-#plt.rcParams['figure.figsize'] = (15, 5)
 tf.get_logger().setLevel('ERROR')           # Suppress TensorFlow logging (2)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -27,17 +25,13 @@ print("Tensorflow version ===> ", tf.__version__)
 
 class DefectInspection:
     def __init__(self, models_dir):#def __init__(self, models_dir, img_path):
-#         You need to change "mobilenet" with proper object detection model in models folder
-        #self.od_model_path = os.path.join(models_dir, "mobilenet/saved_model")
-        #D:\development\vazilproject\o-ring_inspection_using_tensorflow\o-ring_defect_inspection\models
+
         self.od_model_path = os.path.join(models_dir, "mobilenet/saved_model")
         print("od_model_path=", self.od_model_path)
         self.od_threshold = 0.65
         self.od_img_size = [320, 320]
         self.max_output_size = 5
-        #self.feat_model_path = os.path.join(models_dir, "efficientnet-b0")
         self.feat_model_path = os.path.join(models_dir, "efficientnet-b0")
-        #self.cls_model_path = os.path.join(models_dir, "mlp_224_best_98.h5")
         self.cls_model_path = os.path.join(models_dir, "mlp_224_best_98.h5")
         self.img_org = None
         self.CROP_SIZE = (224, 224)
@@ -48,7 +42,7 @@ class DefectInspection:
         self.cls_model = None
         #self.img_path = img_path
         self.IMG_LIST = None
-        self.label_map = {0: "NG", 1: "OK"}
+        self.label_map = {0: "Failure", 1: "Success"}
         
     def load_models(self):
         start = time.time()
@@ -65,8 +59,7 @@ class DefectInspection:
         print("All models loaded successfully")
         print(f"Loading time is {end-start} s")
         
-    #def convertRGBToGrayScale(self):
-    
+
     def load_image(self, path): 
         img = Image.open(path).convert('L')
         img_numpy = np.array(img, 'uint8')
@@ -74,14 +67,12 @@ class DefectInspection:
         
         data = tf.keras.preprocessing.image.load_img(path) #A PIL Image instance.
         img_tr = tf.convert_to_tensor(tf.keras.preprocessing.image.img_to_array(data), dtype=tf.uint8)
-        #img_tr = tf.convert_to_tensor(tf.keras.preprocessing.image.img_to_array(img), dtype=tf.uint8)
         return img_tr
     
     @tf.function
     def get_detections(self, image):
         """Detect objects in image."""    
         img = tf.dtypes.cast(tf.image.resize(image, self.od_img_size), dtype=tf.uint8) 
-        #img = tf.dtypes.cast(image, dtype=tf.uint8) #+added by swseo
         detections = self.od_model(img)######################
 
         return detections
@@ -114,10 +105,8 @@ class DefectInspection:
         return pred_cls
 
     def start_processing(self, img_path):#def start_processing(self, input_tensor):
-        ximg_path = os.path.join("D:/development/vazilproject/kic_project", img_path)
-        print("start_processing img_path=", ximg_path)      
-        
-        
+        ximg_path = os.path.join("project_dir", img_path)
+
         img_tr = self.load_image(ximg_path)
         
         print("start_processing load_image completion")  

@@ -15,18 +15,13 @@ def loginWebserver(login_url, username, password):
 
 
 def postInferenceResult(auth_token, inspection_result_url, data):
-    #temp = login_response.json()
-    #auth_token = temp["token"]
 
-    #inspection_result_url = 'http://133.186.162.169:8080/api/inference/result'
-    #inspection_result_url = 'http://192.168.1.49:8080/api/inference/result'
     hed = {'Authorization': 'Bearer ' + auth_token}
     
     response = requests.post(inspection_result_url, json=data, headers=hed)
     
     print(response)
     return response
-    #print(test_response.json())
 
 
 

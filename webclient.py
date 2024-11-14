@@ -80,16 +80,8 @@ class WSClient:
 if __name__ == '__main__':
     wcs = WSClient()
     
-    #wcs.connect_server2()
-    #res = wcs.start_connect_server()
     asyncio.get_event_loop().run_until_complete(wcs.listen_forever())
     print("*******************************************")
     print("return run_until complete")
     print("*******************************************")
-    #print(res)
-    
-    #res = wcs.start_com_server()
-	#asyncio.get_event_loop().run_forever()
-	#print("*******************************************")
-	#print("return run_forever")
-	#print("*********************************************")
+
